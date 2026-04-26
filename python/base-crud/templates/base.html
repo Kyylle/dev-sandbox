@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html data-theme="light">
+<head>
+    <title>{% block title %}School Management{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>
+        tailwind.config = {
+            plugins: [daisyui],
+        }
+    </script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-600 text-white px-8 py-4 flex justify-between items-center shadow">
+        <a href="/" class="text-xl font-bold">🏫 School Management</a>
+        <div class="flex gap-6">
+            <a href="/students/"   class="hover:text-blue-200 transition">Students</a>
+            <a href="/teachers/"   class="hover:text-blue-200 transition">Teachers</a>
+            <a href="/subjects/"   class="hover:text-blue-200 transition">Subjects</a>
+            <a href="/enrollment/" class="hover:text-blue-200 transition">Enrollment</a>
+            <a href="/attendance/" class="hover:text-blue-200 transition">Attendance</a>
+            <a href="/grades/"     class="hover:text-blue-200 transition">Grades</a>
+        </div>
+    </nav>
+
+    <!-- Toast Container -->
+    {% if messages %}
+    <div class="toast toast-top toast-end z-50">
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %} shadow-lg toast-item">
+                <span>
+                    {% if message.tags == 'error' %}❌{% else %}✅{% endif %}
+                    {{ message }}
+                </span>
+                <button onclick="dismissToast(this.parentElement)" class="btn btn-ghost btn-xs">✕</button>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Content -->
+    <main class="p-8">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Toast Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toasts = document.querySelectorAll('.toast-item');
+            toasts.forEach(function (toast) {
+                setTimeout(function () {
+                    dismissToast(toast);
+                }, 4000);
+            });
+        });
+
+        function dismissToast(toast) {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            toast.style.transition = 'all 0.5s ease';
+            setTimeout(function () {
+                toast.remove();
+            }, 500);
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto">
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">Dashboard</h1>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+        <a href="/students/" class="bg-white rounded-xl shadow p-6 hover:shadow-md transition">
+            <div class="text-4xl mb-3">🎓</div>
+            <h2 class="text-xl font-semibold text-gray-700">Students</h2>
+            <p class="text-gray-400 text-sm mt-1">Manage student records</p>
+        </a>
+
+        <a href="/teachers/" class="bg-white rounded-xl shadow p-6 hover:shadow-md transition">
+            <div class="text-4xl mb-3">👨‍🏫</div>
+            <h2 class="text-xl font-semibold text-gray-700">Teachers</h2>
+            <p class="text-gray-400 text-sm mt-1">Manage teacher records</p>
+        </a>
+
+        <a href="/subjects/" class="bg-white rounded-xl shadow p-6 hover:shadow-md transition">
+            <div class="text-4xl mb-3">📚</div>
+            <h2 class="text-xl font-semibold text-gray-700">Subjects</h2>
+            <p class="text-gray-400 text-sm mt-1">Manage subjects</p>
+        </a>
+
+        <a href="/enrollment/" class="bg-white rounded-xl shadow p-6 hover:shadow-md transition">
+            <div class="text-4xl mb-3">📝</div>
+            <h2 class="text-xl font-semibold text-gray-700">Enrollment</h2>
+            <p class="text-gray-400 text-sm mt-1">Manage enrollments</p>
+        </a>
+
+        <a href="/attendance/" class="bg-white rounded-xl shadow p-6 hover:shadow-md transition">
+            <div class="text-4xl mb-3">📅</div>
+            <h2 class="text-xl font-semibold text-gray-700">Attendance</h2>
+            <p class="text-gray-400 text-sm mt-1">Track attendance</p>
+        </a>
+
+        <a href="/grades/" class="bg-white rounded-xl shadow p-6 hover:shadow-md transition">
+            <div class="text-4xl mb-3">📊</div>
+            <h2 class="text-xl font-semibold text-gray-700">Grades</h2>
+            <p class="text-gray-400 text-sm mt-1">Manage grades</p>
+        </a>
+
+    </div>
+</div>
+{% endblock %}

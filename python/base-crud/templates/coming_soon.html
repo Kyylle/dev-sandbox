@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Coming Soon{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-20 text-center">
+    <div class="bg-white rounded-xl shadow p-10">
+        <div class="text-6xl mb-4">🚧</div>
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Coming Soon</h1>
+        <p class="text-gray-500 mb-6">
+            The <strong class="text-blue-600">{{ module }}</strong> module is not yet available.
+        </p>
+        <a href="/" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition font-medium">
+            ← Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

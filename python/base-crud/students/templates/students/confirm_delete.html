@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Student{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto">
+    <div class="bg-white rounded-xl shadow p-8 text-center">
+        <div class="text-red-500 text-6xl mb-4">⚠️</div>
+        <h1 class="text-2xl font-bold text-gray-800 mb-2">Delete Student</h1>
+        <p class="text-gray-600 mb-6">
+            Are you sure you want to delete
+            <strong class="text-gray-800">{{ student.first_name }} {{ student.last_name }}</strong>?
+            <br>
+            <span class="text-sm text-red-500">This action cannot be undone.</span>
+        </p>
+        <form method="POST" class="flex gap-3 justify-center">
+            {% csrf_token %}
+            <button type="submit"
+                    class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition font-medium">
+                Yes, Delete
+            </button>
+            <a href="{% url 'student_list' %}"
+               class="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-200 transition font-medium">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

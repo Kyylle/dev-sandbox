@@ -51,3 +51,6 @@ Desktop.ini
 # Mac
 # ===========================
 .DS_Store
+
+# Local test files
+test.py
