@@ -1,0 +1,91 @@
+{% load static %}
+
+<head>
+    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+</head>
+<aside class="orchestrator-sidebar d-flex flex-column h-100">
+    <!-- Search and Filter Directory -->
+    <div class="p-3 border-bottom">
+        <div class="d-flex align-items-center justify-content-between text-secondary mb-2">
+            <span class="fs-8 text-uppercase tracking-wider fw-bold">System Workspace</span>
+            <span class="fs-7" style="cursor: pointer;">⚙️</span>
+        </div>
+        <div class="position-relative">
+            <input type="text" class="form-control form-control-light-sm ps-4" placeholder="Search folders..."
+                id="folderSearch">
+            <span class="position-absolute top-50 start-0 translate-middle-y ps-2 text-muted fs-7">🔍</span>
+        </div>
+    </div>
+
+    <!-- Sidebar Scrollable Navigation -->
+    <div class="flex-grow-1 overflow-y-auto py-2">
+
+        <!-- Administration Controls (Only visible to Administrators) -->
+        <!-- Administration Controls -->
+        {% if is_admin %}
+        <div class="px-3 py-1 text-uppercase text-muted fw-bold fs-8 tracking-wider">Administration</div>
+        <div class="folder-list mt-1 mb-3">
+            <!-- Link directly to the dashboard with view parameter -->
+            <a href="{% url 'dashboard' %}?view=user_management"
+                class="sidebar-folder-item d-flex align-items-center justify-content-between px-3 py-2.5 {% if active_view == 'user_management' %}active{% endif %}">
+                <div class="d-flex align-items-center text-truncate">
+                    <span class="me-2 text-secondary opacity-75">👤</span>
+                    <span style="font-size: 0.85rem;">User Management</span>
+                </div>
+            </a>
+        </div>
+        {% endif %}
+
+        <!-- Tree Folders Directory -->
+        <div class="px-3 py-1 text-uppercase text-muted fw-bold fs-8 tracking-wider">Projects</div>
+        <div class="folder-list mt-1">
+            {% regroup folders by department_name as folders_by_department %}
+
+            {% for group in folders_by_department %}
+            <!-- Department Sub-Header -->
+            <div class="px-3 py-1 text-uppercase text-muted fw-bold fs-8 tracking-wider mt-3">
+                🏢 {{ group.grouper }}
+            </div>
+
+            <div class="folder-list mt-1">
+                {% for folder in group.list %}
+                <!-- Link to dashboard with folder_id parameter -->
+                <a href="{% url 'dashboard' %}?folder_id={{ folder.id }}"
+                    class="sidebar-folder-item d-flex align-items-center justify-content-between px-3 py-2.5 {% if selected_folder.id == folder.id and active_view != 'user_management' %}active{% endif %}"
+                    data-folder-name="{{ folder.name|lower }}">
+                    <div class="d-flex align-items-center text-truncate">
+                        <span class="me-2 text-secondary opacity-75">📁</span>
+                        <span class="text-truncate" style="font-size: 0.85rem;">{{ folder.name }}</span>
+                    </div>
+                    {% if is_admin %}
+                    <span class="badge bg-light text-secondary border border-light" style="font-size: 0.65rem;">
+                        {{ folder.username }}
+                    </span>
+                    {% endif %}
+                </a>
+                {% endfor %}
+            </div>
+            {% empty %}
+            <div class="px-3 py-1 text-uppercase text-muted fw-bold fs-8 tracking-wider mt-3">
+                My Folders
+            </div>
+            <div class="text-muted px-3 py-2 fs-7">No folders registered.</div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- User Profile Sign-out Panel -->
+    <div class="p-3 border-top bg-light mt-auto">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="text-truncate">
+                <span class="d-block text-muted" style="font-size: 0.65rem; text-transform: uppercase;">Profile</span>
+                <strong class="text-dark fs-7 text-truncate d-block">
+                    {{ request.session.username|default:"Admin Profile" }}
+                </strong>
+            </div>
+            <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger px-2.5 py-1 fs-8 rounded">Sign Out</a>
+        </div>
+    </div>
+</aside>
+
+<script src="{% static 'scripts/_sidebar.js' %}"></script>

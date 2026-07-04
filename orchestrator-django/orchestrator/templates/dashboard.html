@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'styles/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Unified Workspace Layout (Visible to both Admins and Standard Users) -->
+<div class="container-fluid px-0 min-vh-100 d-flex flex-column">
+    <!-- Header -->
+    {% include 'reusables/_header.html' %}
+
+    <div class="row g-0 flex-grow-1">
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2">
+            {% include 'reusables/_sidebar.html' %}
+        </div>
+
+        <!-- Central Display Space -->
+        <div class="col-md-9 col-lg-10">
+            {% if active_view == 'user_management' and is_admin %}
+                <!-- User Management (Only loaded if user is admin and tab is active) -->
+                <div class="p-4">
+                    {% include 'adminpage/admin_user_management.html' %}
+                </div>
+            {% elif selected_folder %}
+                <!-- Dynamic Tabs (Processes, Jobs, Triggers, Folder Packages, Logs) -->
+                {% include 'reusables/_automations_content.html' %}
+            {% else %}
+                <!-- Welcome Screen -->
+                <div class="p-4">
+                    <div class="orchestrator-panel p-5 text-center text-muted bg-white border rounded shadow-sm">
+                        <span class="fs-1 d-block mb-3">🏠</span>
+                        <h4 class="text-dark fw-bold h6 mb-2">Welcome to your Execution Environment Controller</h4>
+                        <p class="fs-7 mx-auto text-secondary mb-0" style="max-width: 500px;">
+                            Quickly manage folder registry paths, view logs, select runtime packages, and configure workflows through the system menu.
+                        </p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
